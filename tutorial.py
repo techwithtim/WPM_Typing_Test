@@ -43,7 +43,7 @@ def wpm_test(stdscr):
 		display_text(stdscr, target_text, current_text, wpm)
 		stdscr.refresh()
 
-		if "".join(current_text) == target_text:
+		if len("".join(current_text)) == len(target_text):
 			stdscr.nodelay(False)
 			break
 
@@ -51,9 +51,6 @@ def wpm_test(stdscr):
 			key = stdscr.getkey()
 		except:
 			continue
-
-		if ord(key) == 27:
-			break
 
 		if key in ("KEY_BACKSPACE", '\b', "\x7f"):
 			if len(current_text) > 0:
@@ -73,7 +70,10 @@ def main(stdscr):
 		stdscr.addstr(2, 0, "You completed the text! Press any key to continue...")
 		key = stdscr.getkey()
 		
-		if ord(key) == 27:
+		try:
+			if ord(key) == 27:
+				break
+		except TypeError:
 			break
 
 wrapper(main)
