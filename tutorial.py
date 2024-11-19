@@ -52,6 +52,9 @@ def wpm_test(stdscr):
 		except:
 			continue
 
+		if current_text == []:
+			start_time = time.time()
+
 		if ord(key) == 27:
 			break
 
