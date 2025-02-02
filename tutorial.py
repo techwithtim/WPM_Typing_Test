@@ -4,14 +4,14 @@ import time
 import random
 
 
-def start_screen(stdscr):
+def start_screen(stdscr) -> None:
 	stdscr.clear()
 	stdscr.addstr("Welcome to the Speed Typing Test!")
 	stdscr.addstr("\nPress any key to begin!")
 	stdscr.refresh()
 	stdscr.getkey()
 
-def display_text(stdscr, target, current, wpm=0):
+def display_text(stdscr, target, current, wpm=0) -> None:
 	stdscr.addstr(target)
 	stdscr.addstr(1, 0, f"WPM: {wpm}")
 
@@ -23,12 +23,12 @@ def display_text(stdscr, target, current, wpm=0):
 
 		stdscr.addstr(0, i, char, color)
 
-def load_text():
+def load_text() -> str:
 	with open("text.txt", "r") as f:
 		lines = f.readlines()
 		return random.choice(lines).strip()
 
-def wpm_test(stdscr):
+def wpm_test(stdscr) -> None:
 	target_text = load_text()
 	current_text = []
 	wpm = 0
@@ -62,7 +62,7 @@ def wpm_test(stdscr):
 			current_text.append(key)
 
 
-def main(stdscr):
+def main(stdscr) -> None:
 	curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
 	curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
 	curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)
@@ -76,4 +76,8 @@ def main(stdscr):
 		if ord(key) == 27:
 			break
 
-wrapper(main)
+try:
+	wrapper(main)
+except KeyboardInterrupt:
+	print("Ended typing test via keyboard interrupt.")
+	
